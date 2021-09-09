@@ -56,8 +56,12 @@ def save_html_as_pdf(url_list,title_list):
     """
     config = pdfkit.configuration(wkhtmltopdf='D:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
     for i in range(0,len(url_list)):
+        # replace illeagle characters
+        pattern=r'[\\/:*?"<>|\r\n]+'
+        filename = re.sub(pattern, "_", title_list[i]) 
         filename = time.strftime("%Y-%m-%d",time.localtime())+"-"+title_list[i]+".pdf"
         pdfkit.from_url(url_list[i],filename,configuration=config)
+        print(filename)
 
 def main():
     article_url,article_title = get_article_html()
